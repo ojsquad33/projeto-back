@@ -6,4 +6,5 @@ import com.squad33.api.models.Aluno;
 
 public interface AlunoRepository extends JpaRepository<Aluno, Integer>{
 
+	boolean existsByEmail(String email);
 }
