@@ -7,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +26,8 @@ public class Aula {
 	private String professor;
 	@Column(nullable = false, unique = true)
 	private String url;
+	@Column(nullable = false, length = 30)
+	private String tipo;
 	@JoinColumn(name = "curso_id")
 	@ManyToOne
 	private Curso curso;
