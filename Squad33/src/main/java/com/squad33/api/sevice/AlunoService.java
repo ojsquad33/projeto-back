@@ -16,6 +16,6 @@ public interface AlunoService {
 
 	public Optional<Aluno> FindById(Integer id);
 	
-	public boolean existsByEmail(Aluno aluno);
+	public boolean existsByEmail(String email);
 	
 }
