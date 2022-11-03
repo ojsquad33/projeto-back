@@ -20,9 +20,12 @@ public class Trilha {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@Column(name = "url_imagem", nullable = false)
+	private String urlImagem;
 	@Column(name = "nome_trilha")
 	private String nomeDaTrilha;
 	@OneToMany(mappedBy = "trilha")
 	private List<Curso> cursos;
+	
 
 }
