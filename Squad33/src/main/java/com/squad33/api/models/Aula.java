@@ -28,6 +28,8 @@ public class Aula {
 	private String url;
 	@Column(nullable = false, length = 30)
 	private String tipo;
+	@Column
+	private boolean concluido;
 	@JoinColumn(name = "curso_id")
 	@ManyToOne
 	private Curso curso;
