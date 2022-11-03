@@ -7,12 +7,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 public class Aluno {
@@ -27,6 +30,7 @@ public class Aluno {
 	@Column(nullable = false)
 	private String senha;
 	@OneToMany
+	@JoinColumn
 	private List<Curso> cursos;
 	
 
