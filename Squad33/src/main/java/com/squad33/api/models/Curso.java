@@ -13,8 +13,10 @@ import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 public class Curso {
@@ -26,8 +28,6 @@ public class Curso {
 	private String nome;
 	@Column(nullable = false, length = 700, unique = true)
 	private String descricao;
-	@Column(name = "tempo_duracao", nullable = false)
-	private double tempoDuracao; // int, double, String???
 	@OneToMany(mappedBy = "curso")
 	private List<Aula> aulas;
 	@ManyToOne
