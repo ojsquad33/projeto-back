@@ -37,9 +37,11 @@ public class AlunoServiceImpl implements AlunoService{
 	}
 	
 	@Override
-	public boolean existsByEmail(Aluno aluno) {
-		return repository.existsByEmail(aluno.getEmail());
+	public boolean existsByEmail(String email) {
+		return repository.existsByEmail(email);
 	}
+
+	
 	
 
 }
