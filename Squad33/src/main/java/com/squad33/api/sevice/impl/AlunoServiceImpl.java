@@ -4,14 +4,17 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.squad33.api.models.Aluno;
 import com.squad33.api.repositories.AlunoRepository;
-import com.squad33.api.sevice.AlunoService;
+import com.squad33.api.sevice.IAlunoService;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
-public class AlunoServiceImpl implements AlunoService{
+public class AlunoServiceImpl implements IAlunoService {
 
 
 	@Autowired
@@ -19,14 +22,12 @@ public class AlunoServiceImpl implements AlunoService{
 	
 	@Override
 	public Aluno save(Aluno aluno) {
+		if(repository.existsByEmail(aluno.getEmail())) {
+		throw new ResponseStatusException(HttpStatus.CONFLICT, "E-mail já existente");
+		}
 		return repository.save(aluno);
 	}
-	
-	@Override
-	public void deleteById(Integer id) {
-		repository.deleteById(id);
-	}
-	
+
 	@Override
 	public List<Aluno> getAll(){
 		return repository.findAll();

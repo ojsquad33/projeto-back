@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.squad33.api.models.Aula;
-import com.squad33.api.sevice.AulaService;
+import com.squad33.api.sevice.impl.AulaServiceImpl;
 
 @RestController
 @RequestMapping("/api/aulas")
 public class AulaController {
 	
 	@Autowired
-	private AulaService aulaService;
+	private AulaServiceImpl aulaServiceImpl;
 	
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
 	public List<Aula> getAll(){
-		return aulaService.getAll();
+		return aulaServiceImpl.getAll();
 	}
 
 }

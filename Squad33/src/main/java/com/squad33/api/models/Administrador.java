@@ -8,10 +8,12 @@ import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @Data
 @Entity
+@NoArgsConstructor
 public class Administrador {
 
 	@Id
