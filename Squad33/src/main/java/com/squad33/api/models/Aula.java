@@ -30,7 +30,4 @@ public class Aula {
 	private String tipo;
 	@Column
 	private boolean concluido;
-//	@ManyToOne
-//	@JsonIgnoreProperties
-//	private Curso curso;
 }
