@@ -3,62 +3,84 @@ package com.squad33.api.sevice.impl;
 import java.util.List;
 import java.util.Optional;
 
+import com.squad33.api.models.Trilha;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.squad33.api.models.Aula;
 import com.squad33.api.models.Curso;
-import com.squad33.api.sevice.AdministradorService;
-import com.squad33.api.sevice.AulaService;
-import com.squad33.api.sevice.CursoService;
+import com.squad33.api.sevice.IAdministradorService;
 
 @Service
-public class AdministradorServiceImpl implements AdministradorService{
+public class AdministradorServiceImpl implements IAdministradorService {
 	
 	@Autowired
-	private AulaService aulaService;
+	private AulaServiceImpl aulaServiceImpl;
 	@Autowired
-	private CursoService cursoService;
+	private CursoServiceImpl cursoServiceImpl;
+
+	@Autowired
+	private TrilhaServiceImpl trilhaServiceImpl;
 
 	@Override
 	public void deleteAula(Aula aula) {
-		aulaService.deleteAula(aula);
+		aulaServiceImpl.deleteAula(aula);
 	}
 
 	@Override
 	public void deleteCurso(Curso curso) {
-		cursoService.deleteCurso(curso);
+		cursoServiceImpl.deleteCurso(curso);
+	}
+
+	@Override
+	public void deleteTrilha(Trilha Trilha) {
+
 	}
 
 	@Override
 	public List<Aula> getAllAulas() {
-		return aulaService.getAll();
+		return aulaServiceImpl.getAll();
 	}
 
 	@Override
 	public List<Curso> getAllCursos() {
-		return cursoService.getAll();
+		return cursoServiceImpl.getAll();
+	}
+
+	@Override
+	public List<Trilha> getAllTrilhas() {
+		return null;
 	}
 
 	@Override
 	public Optional<Curso> FindCursoById(Integer id) {
-		return cursoService.FindById(id);
+		return cursoServiceImpl.FindById(id);
+	}
+
+	@Override
+	public Optional<Trilha> FindTrilhaById(Integer id) {
+		return Optional.empty();
 	}
 
 	@Override
 	public Optional<Aula> FindAulaById(Integer id) {
 		// TODO Auto-generated method stub
-		return aulaService.FindById(id);
+		return aulaServiceImpl.FindById(id);
 	}
 
 	@Override
 	public Aula addAula(Aula aula) {
-		return aulaService.save(aula);
+		return aulaServiceImpl.save(aula);
 	}
 
 	@Override
 	public Curso addCurso(Curso curso) {
-		return cursoService.save(curso);
+		return cursoServiceImpl.save(curso);
+	}
+
+	@Override
+	public Trilha addTrilha(Trilha trilha) {
+		return trilhaServiceImpl.addTrilha(trilha);
 	}
 
 }
