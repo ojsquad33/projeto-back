@@ -64,7 +64,6 @@ public class AdministradorServiceImpl implements IAdministradorService {
 
 	@Override
 	public Optional<Aula> FindAulaById(Integer id) {
-		// TODO Auto-generated method stub
 		return aulaServiceImpl.FindById(id);
 	}
 
@@ -80,7 +79,7 @@ public class AdministradorServiceImpl implements IAdministradorService {
 
 	@Override
 	public Trilha addTrilha(Trilha trilha) {
-		return trilhaServiceImpl.addTrilha(trilha);
+		return trilhaServiceImpl.save(trilha);
 	}
 
 }

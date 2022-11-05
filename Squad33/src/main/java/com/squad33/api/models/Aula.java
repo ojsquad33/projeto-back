@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@NoArgsConstructor
 public class Aula {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

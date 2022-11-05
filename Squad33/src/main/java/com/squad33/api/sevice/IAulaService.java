@@ -10,6 +10,8 @@ public interface IAulaService {
     public List<Aula> getAll();
 
     public Aula findById(Integer id);
+    
+    public Aula update(Integer id);
 
 
 

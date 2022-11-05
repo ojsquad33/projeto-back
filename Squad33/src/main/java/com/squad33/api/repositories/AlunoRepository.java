@@ -4,7 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.squad33.api.models.Aluno;
 
-public interface AlunoRepository extends JpaRepository<Aluno, Integer>{
+public interface AlunoRepository extends JpaRepository<Aluno, Integer> {
 
 	boolean existsByEmail(String email);
+
 }
