@@ -7,8 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -28,13 +28,17 @@ public class Curso {
 	private Integer id;
 	@Column(nullable = false, length = 50, unique = true)
 	private String nome;
-	@Column(nullable = false, length = 700, unique = true)
+	@Column(nullable = false, length = 700)
 	private String descricao;
 	@OneToMany
 	@JsonIgnoreProperties
 	private List<Aula> aulas;
 	@JsonIgnore
-	@OneToOne
+	@ManyToOne
 	private Trilha trilha;
+	
+	public void insertAula(Aula aula) {
+		aulas.add(aula);
+	}
 
 }
