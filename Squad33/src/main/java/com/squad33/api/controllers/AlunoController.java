@@ -39,8 +39,11 @@ public class AlunoController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(alunoService.save(aluno));
 	}
 
-@PutMapping
-	public Object update(@RequestBody Aluno aluno) {
-	return save(aluno);
+	@PutMapping("/{id}")
+	public Object update(@RequestBody @Valid Aluno aluno, @PathVariable Integer id) {
+		findById(id);
+		aluno.setId(id);
+		return save(aluno);
+		
 	}
 }
