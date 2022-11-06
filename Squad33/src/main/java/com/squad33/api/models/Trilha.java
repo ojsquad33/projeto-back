@@ -26,6 +26,8 @@ public class Trilha {
 	private String urlImagem;
 	@Column(name = "nome_trilha")
 	private String nomeDaTrilha;
+	@Column
+	private String descricao;
 	@OneToMany(mappedBy = "trilha")
 	private List<Curso> cursos;
 	
