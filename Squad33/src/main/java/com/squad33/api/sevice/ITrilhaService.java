@@ -1,13 +1,13 @@
 package com.squad33.api.sevice;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import com.squad33.api.models.Curso;
 import com.squad33.api.models.Trilha;
 
 public interface ITrilhaService {
 
-    public List<Trilha> getAll();
+    public Page<Trilha> getAll(Pageable pageable);
 
     public Trilha findById(Integer id);
     
