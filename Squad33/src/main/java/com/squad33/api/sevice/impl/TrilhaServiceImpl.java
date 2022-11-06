@@ -1,16 +1,15 @@
 package com.squad33.api.sevice.impl;
 
-import java.util.List;
-
-import com.squad33.api.sevice.ITrilhaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.squad33.api.models.Curso;
 import com.squad33.api.models.Trilha;
 import com.squad33.api.repositories.TrilhaRepository;
+import com.squad33.api.sevice.ITrilhaService;
 
 @Service
 public class TrilhaServiceImpl implements ITrilhaService {
@@ -19,8 +18,8 @@ public class TrilhaServiceImpl implements ITrilhaService {
 	private TrilhaRepository repository;
 
 	@Override
-	public List<Trilha> getAll(){
-		return repository.findAll();
+	public Page<Trilha> getAll(Pageable pageable){
+		return repository.findAll(pageable);
 	}
 
 	@Override
