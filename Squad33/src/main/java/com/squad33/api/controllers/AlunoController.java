@@ -15,6 +15,7 @@ import com.squad33.api.sevice.impl.AlunoServiceImpl;
 
 @RestController
 @RequestMapping("/api/alunos")
+@CrossOrigin(origins = "*")
 public class AlunoController {
 	
 	@Autowired
