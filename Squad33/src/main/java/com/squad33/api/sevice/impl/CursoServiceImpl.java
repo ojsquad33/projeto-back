@@ -14,45 +14,44 @@ import com.squad33.api.repositories.CursoRepository;
 
 @Service
 public class CursoServiceImpl implements ICursoService {
-	
-	@Autowired
-	private CursoRepository repository;
 
-	public Curso save(Curso curso) {
-		return repository.save(curso);
-	}
-	
-	public Curso update(Integer id) {
-		if(!repository.findById(id).isPresent()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-		}
-		
-		Curso curso = repository.findById(id).orElse(null);
-		return save(curso);
-	}
+    @Autowired
+    private CursoRepository repository;
 
-	public void deleteById(Integer id) {
-		if(!repository.findById(id).isPresent()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-		}
-		repository.deleteById(id);
-	}
-	
-	public void deleteCurso(Curso curso) {
-		repository.delete(curso);
-	}
+    @Override
+    public Curso save(Curso curso) {
+        return repository.save(curso);
+    }
+    @Override
+    public Curso update(Integer id) {
+        if (!repository.findById(id).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Curso não encontrado, id inexistente.");
+        }
+        Curso curso = repository.findById(id).orElse(null);
+        return save(curso);
+    }
+    @Override
+    public void deleteById(Integer id) {
+        if (!repository.findById(id).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Curso não encontrado, id inexistente.");
+        }
+        repository.deleteById(id);
+    }
+    @Override
+    public void deleteCurso(Curso curso) {
+        if (!repository.existsById(curso.getId())) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Curso não encontrado, id inexistente.");
+        }
+        repository.delete(curso);
+    }
+    @Override
+    public List<Curso> getAll() {
+        return repository.findAll();
+    }
 
-	public List<Curso> getAll() {
-		return repository.findAll();
-	}
-
-	@Override
-	public Curso findById(Integer id) {
-		return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-	}
-
-	public Optional<Curso> FindById(Integer id) {
-		return repository.findById(id);
-	}
+    @Override
+    public Curso findById(Integer id) {
+        return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
 
 }

@@ -16,29 +16,35 @@ import com.squad33.api.sevice.IAlunoService;
 public class AlunoServiceImpl implements IAlunoService {
 
 
-	@Autowired
-	private AlunoRepository repository;
-	
-	@Override
-	public Aluno save(Aluno aluno) {
-		if(repository.existsByEmail(aluno.getEmail())) {
-		throw new ResponseStatusException(HttpStatus.CONFLICT, "E-mail já existente");
-		}
-		return repository.save(aluno);
-	}
+    @Autowired
+    private AlunoRepository repository;
 
-	@Override
-	public List<Aluno> getAll(){
-		return repository.findAll();
-	}
-	@Override
-	public Optional<Aluno> FindById(Integer id){
-		return repository.findById(id);
-	}
-	
-	@Override
-	public boolean existsByEmail(String email) {
-		return repository.existsByEmail(email);
-	}
+    @Override
+    public Aluno save(Aluno aluno) {
+        if (repository.existsByEmail(aluno.getEmail())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "E-mail já existente");
+        }
+        return repository.save(aluno);
+    }
 
+    @Override
+    public List<Aluno> getAll() {
+        return repository.findAll();
+
+    }
+
+    @Override
+    public Aluno FindById(Integer id) {
+        return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+
+        if(existsByEmail(email)){
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
+        } else {
+            return false;
+        }
+    }
 }

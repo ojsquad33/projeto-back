@@ -30,7 +30,7 @@ public class AlunoController {
 	@ResponseStatus(HttpStatus.OK)
 	// Ver 04.11.2022 - > @ExceptionHandler
 	public Aluno findById(@PathVariable Integer id) {
-		return  alunoService.FindById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Aluno não encontrado"));
+		return alunoService.FindById(id);
 	}
 	
 	@PostMapping("/signup")
@@ -38,10 +38,8 @@ public class AlunoController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(alunoService.save(aluno));
 	}
 
-
 @PutMapping
 	public Object update(@RequestBody Aluno aluno) {
 	return save(aluno);
-		
 	}
 }

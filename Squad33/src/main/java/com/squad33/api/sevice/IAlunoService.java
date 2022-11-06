@@ -12,7 +12,7 @@ public interface IAlunoService {
 
 	public List<Aluno> getAll();
 
-	public Optional<Aluno> FindById(Integer id);
+	public Aluno FindById(Integer id);
 	
 	public boolean existsByEmail(String email);
 

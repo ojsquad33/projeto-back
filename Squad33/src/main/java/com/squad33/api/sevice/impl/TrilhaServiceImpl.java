@@ -18,13 +18,14 @@ public class TrilhaServiceImpl implements ITrilhaService {
 	@Autowired
 	private TrilhaRepository repository;
 
+	@Override
 	public List<Trilha> getAll(){
 		return repository.findAll();
 	}
 
 	@Override
 	public Trilha findById(Integer id) {
-		return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Trilha não encontrada, id inexistente."));
 	}
 
 	@Override
@@ -35,27 +36,18 @@ public class TrilhaServiceImpl implements ITrilhaService {
 	@Override
 	public void deleteById(Integer id) {
 		if(!repository.findById(id).isPresent()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Trilha não encontrada, id inexistente.");
 		}
-		
 		repository.deleteById(id);
 	}
 
 	@Override
 	public Trilha update(Integer id) {
-		
+
 		if(!repository.findById(id).isPresent()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Trilha não encontrada, id inexistente.");
 		}
 		Trilha trilha = repository.findById(id).orElse(null);
 		return save(trilha);
 	}
-
-	@Override
-	public Curso saveCurso(Curso curso) {
-		
-		return null;
-	}
-
-	
 }

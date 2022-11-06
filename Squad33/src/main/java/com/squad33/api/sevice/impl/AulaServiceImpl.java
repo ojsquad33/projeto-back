@@ -17,38 +17,41 @@ public class AulaServiceImpl implements IAulaService {
 
 	@Autowired
 	private AulaRepository repository;
-
+	@Override
 	public Aula save(Aula aula) {
 		return repository.save(aula);
 	}
-
+	@Override
 	public void deleteById(Integer id) {
-		repository.deleteById(id);
+		if(!repository.existsById(id)){
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Aula não encontrada, id não existente.");
+		} else {
+			repository.deleteById(id);
+		}
 	}
-	
+	@Override
 	public void deleteAula(Aula aula) {
-		repository.delete(aula);
+		if(!repository.existsById(aula.getId())){
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Aula não encontrada, Id inexistente.");
+		} else {
+			repository.delete(aula);
+		}
 	}
-
+	@Override
 	public List<Aula> getAll() {
 		return repository.findAll();
 	}
 
 	@Override
 	public Aula findById(Integer id) {
-		return repository.findById(id).orElse(null);
-	}
-
-	public Optional<Aula> FindById(Integer id) {
-		return repository.findById(id);
+		return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Aula não encontrada, id inexistente."));
 	}
 
 	@Override
 	public Aula update(Integer id) {
 		if(!repository.findById(id).isPresent()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Aula não encontrada, id inexistente.");
 		}
-		
 		Aula aula = repository.findById(id).orElse(null);
 		return save(aula);
 	}

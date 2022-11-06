@@ -14,10 +14,7 @@ public interface ITrilhaService {
     public void deleteById(Integer id);
 
     public Trilha save(Trilha trilha);
-    
-    public Curso saveCurso(Curso curso);
-    
-    public Trilha update(Integer id);
 
+    public Trilha update(Integer id);
 
 }

@@ -5,11 +5,14 @@ import java.util.Optional;
 
 import com.squad33.api.models.Trilha;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.squad33.api.models.Aula;
 import com.squad33.api.models.Curso;
 import com.squad33.api.sevice.IAdministradorService;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class AdministradorServiceImpl implements IAdministradorService {
@@ -34,7 +37,7 @@ public class AdministradorServiceImpl implements IAdministradorService {
 
 	@Override
 	public void deleteTrilha(Trilha Trilha) {
-
+	trilhaServiceImpl.deleteById(Trilha.getId());
 	}
 
 	@Override
@@ -53,18 +56,18 @@ public class AdministradorServiceImpl implements IAdministradorService {
 	}
 
 	@Override
-	public Optional<Curso> FindCursoById(Integer id) {
-		return cursoServiceImpl.FindById(id);
+	public Curso findCursoById(Integer id) {
+		return cursoServiceImpl.findById(id);
 	}
 
 	@Override
-	public Optional<Trilha> FindTrilhaById(Integer id) {
-		return Optional.empty();
+	public Trilha findTrilhaById(Integer id) {
+		return trilhaServiceImpl.findById(id);
 	}
 
 	@Override
-	public Optional<Aula> FindAulaById(Integer id) {
-		return aulaServiceImpl.FindById(id);
+	public Aula findAulaById(Integer id) {
+		return aulaServiceImpl.findById(id);
 	}
 
 	@Override

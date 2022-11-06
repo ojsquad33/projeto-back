@@ -15,7 +15,6 @@ public interface IAdministradorService {
 
 	public Trilha addTrilha(Trilha trilha);
 
-
 	public void deleteAula(Aula aula);
 
 	public void deleteCurso(Curso curso);
@@ -28,11 +27,11 @@ public interface IAdministradorService {
 
 	public List<Trilha> getAllTrilhas();
 
-	public Optional<Aula> FindAulaById(Integer id);
+	public Aula findAulaById(Integer id);
 
-	public Optional<Curso> FindCursoById(Integer id);
+	public Curso findCursoById(Integer id);
 
-	public Optional<Trilha> FindTrilhaById(Integer id);
+	public Trilha findTrilhaById(Integer id);
 
 
 }
