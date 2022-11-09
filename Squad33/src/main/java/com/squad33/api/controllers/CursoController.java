@@ -25,4 +25,6 @@ public class CursoController {
 	public List<Curso> getAll(){
 		return cursoService.getAll();
 	}
+	
+	
 }
