@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,21 +20,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class Aluno {
-	
+@Builder
+public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(length = 50, nullable = false)
-	private String nome;
 	@Column(length = 110, nullable = false, unique = true)
-	private String email;
+	private String username;
 	@Column(nullable = false)
 	private String senha;
+	@Column
+	private boolean admin;
 	@OneToMany
 	@JsonIgnoreProperties
 	private List<Curso> cursos;
-	
-
-
 }
