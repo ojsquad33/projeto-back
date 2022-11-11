@@ -28,8 +28,13 @@ public class JwtService {
 		LocalDateTime dataHoraExpiracao = LocalDateTime.now().plusMinutes(expString);
 
 		Date data = Date.from(dataHoraExpiracao.atZone(ZoneId.systemDefault()).toInstant());
+		HashMap<String, Object> claims = new HashMap<>();
+		String[] roles = 
+				usuario.isAdmin() ? new String[] { "ADM", "USER" } : new String[] { "USER" };
 
-		return Jwts.builder().setSubject(usuario.getUsername()).setExpiration(data)
+		claims.put("roles", roles);
+
+		return Jwts.builder().setSubject(usuario.getUsername()).setExpiration(data).addClaims(claims)
 				.signWith(SignatureAlgorithm.HS512, chaveAssinatura).compact();
 	}
 
@@ -51,6 +56,5 @@ public class JwtService {
 	public String obterUsernameUsuario(String token) throws ExpiredJwtException {
 		return (String) obterClaims(token).getSubject();
 	}
-	
 
 }

@@ -30,23 +30,22 @@ public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService {
 		UserDetails user = loadUserByUsername(usuario.getUsername());
 		boolean senhasBatem = passwordEncoder.matches(usuario.getSenha(), user.getPassword());
 		
-		if(senhasBatem) {
-			return user;
+		if(!senhasBatem) {
+			throw new SenhaInvalidaException();
 		}
 		
-		throw new SenhaInvalidaException();
 		
+		return user;
 		
 	}
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		Usuario usuario = repository.findByUsername(username)
-				.orElseThrow(() -> new UsernameNotFoundException("Usuario não encontrado"));
-		
+		Usuario usuario = findByUsername(username);
+				
 		String[] roles = 
-				usuario.isAdmin() ? new String[] { "ADMIN", "USER" } : new String[] { "USER" };
+				usuario.isAdmin() ? new String[] { "ADM", "USER" } : new String[] { "USER" };
 
 		return User
 				.builder()
@@ -74,6 +73,20 @@ public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService {
 	@Override
 	public Usuario findById(Integer id) {
 		return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+	}
+
+	@Override
+	public Usuario findByUsername(String username) {
+		return repository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Usuario não encontrado"));
+	}
+
+	@Override
+	public Usuario update(Usuario usuario, Integer id) {
+		return repository.findById(id).map(u -> {
+			usuario.setId(u.getId());
+			repository.save(usuario);
+			return u;
+		}).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario não encontrado"));
 	}
 
 }
