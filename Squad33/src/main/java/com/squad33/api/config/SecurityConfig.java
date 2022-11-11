@@ -41,12 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 		auth
 		.userDetailsService(usuarioService)
-		.passwordEncoder(passwordEncoder())
-		.and()
-		.inMemoryAuthentication()
-		.withUser("adm")
-		.password(passwordEncoder().encode("adm123"))
-		.roles("USER","ADM");
+		.passwordEncoder(passwordEncoder());
 	}
 	
 	@Override
@@ -54,15 +49,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http.csrf().disable()
 		.authorizeRequests()
 		.antMatchers("/api/usuarios/signup").permitAll()
+		.antMatchers("/api/trilhas").permitAll()
 		.antMatchers("/api/aulas").authenticated()
 		.antMatchers("/api/cursos").authenticated()
-		.antMatchers("/api/trilhas").authenticated()
 		.antMatchers(HttpMethod.PUT,"/api/usuarios/**").hasRole("USER")
 		.antMatchers(HttpMethod.POST,"/api/usuarios/**").permitAll()
 		.antMatchers("/api/usuarios/**").hasRole("ADM")
-		.antMatchers("api/administrador/aulas/**").hasRole("ADM")
-		.antMatchers("api/administrador/cursos/**").hasRole("ADM")
-		.antMatchers("api/administrador/trilhas/**").hasRole("ADM")
+		.antMatchers("/api/administrador/**").hasRole("ADM")
 		.and()
 		.sessionManagement()
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
