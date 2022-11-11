@@ -45,7 +45,6 @@ public class UsuarioController {
 
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	// Ver 04.11.2022 - > @ExceptionHandler
 	public Usuario findById(@PathVariable Integer id) {
 		return usuarioService.findById(id);
 	}
@@ -58,9 +57,12 @@ public class UsuarioController {
 	@PostMapping("/auth")
 	public TokenDTO autenticar(@RequestBody CredenciaisDTO credenciais) {
 		try {
+			boolean isAdmin = usuarioService.findByUsername(credenciais.getUsername()).isAdmin();
 			Usuario usuario = Usuario.builder()
 					.username(credenciais.getUsername())
-					.senha(credenciais.getSenha()).build();
+					.senha(credenciais.getSenha())
+					.admin(isAdmin)
+					.build();
 			UserDetails usuarioAutenticado = usuarioService.autenticar(usuario);
 			String token = jwtService.gerarToken(usuario);
 			
