@@ -8,8 +8,6 @@ public interface IUsuarioService {
 
 	public Usuario save(Usuario usuario);
 	
-	public Usuario update(Usuario usuario,Integer id);
-
 	public List<Usuario> findAll();
 
 	public Usuario findById(Integer id);

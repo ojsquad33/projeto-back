@@ -80,13 +80,6 @@ public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService {
 		return repository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Usuario não encontrado"));
 	}
 
-	@Override
-	public Usuario update(Usuario usuario, Integer id) {
-		return repository.findById(id).map(u -> {
-			usuario.setId(u.getId());
-			repository.save(usuario);
-			return u;
-		}).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario não encontrado"));
-	}
+	
 
 }

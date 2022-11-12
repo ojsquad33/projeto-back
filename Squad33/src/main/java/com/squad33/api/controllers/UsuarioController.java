@@ -2,9 +2,10 @@ package com.squad33.api.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -55,7 +56,7 @@ public class UsuarioController {
 	}
 	
 	@PostMapping("/auth")
-	public TokenDTO autenticar(@RequestBody CredenciaisDTO credenciais) {
+	public TokenDTO autenticar(@RequestBody CredenciaisDTO credenciais,HttpServletResponse response) {
 		try {
 			boolean isAdmin = usuarioService.findByUsername(credenciais.getUsername()).isAdmin();
 			Usuario usuario = Usuario.builder()
@@ -65,6 +66,8 @@ public class UsuarioController {
 					.build();
 			UserDetails usuarioAutenticado = usuarioService.autenticar(usuario);
 			String token = jwtService.gerarToken(usuario);
+			
+			response.addCookie(new Cookie("Authorization",token));
 			
 			return new TokenDTO(usuario.getUsername(), token);
 		} catch (UsernameNotFoundException | SenhaInvalidaException e) {
