@@ -34,7 +34,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UsuarioController {
 
-
 	private final UsuarioServiceImpl usuarioService;
 	private final JwtService jwtService;
 
@@ -54,24 +53,25 @@ public class UsuarioController {
 	public ResponseEntity<Object> save(@RequestBody @Valid Usuario usuario) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.save(usuario));
 	}
-	
+
 	@PostMapping("/auth")
-	public TokenDTO autenticar(@RequestBody CredenciaisDTO credenciais,HttpServletResponse response) {
+	public TokenDTO autenticar(@RequestBody CredenciaisDTO credenciais, HttpServletResponse response) {
 		try {
 			boolean isAdmin = usuarioService.findByUsername(credenciais.getUsername()).isAdmin();
-			Usuario usuario = Usuario.builder()
-					.username(credenciais.getUsername())
-					.senha(credenciais.getSenha())
-					.admin(isAdmin)
-					.build();
+			Usuario usuario = Usuario.builder().username(credenciais.getUsername()).senha(credenciais.getSenha())
+					.admin(isAdmin).build();
 			UserDetails usuarioAutenticado = usuarioService.autenticar(usuario);
 			String token = jwtService.gerarToken(usuario);
-			
-			response.addCookie(new Cookie("Authorization",token));
-			
-			return new TokenDTO(usuario.getUsername(), token);
+
+			Cookie cookie = new Cookie("Authorization", token);
+			cookie.setPath("/");
+			String[] roles = usuario.isAdmin() ? new String[] { "ADM", "USER" } : new String[] { "USER" };
+
+			response.addCookie(cookie);
+
+			return new TokenDTO(usuario.getUsername(), token, roles);
 		} catch (UsernameNotFoundException | SenhaInvalidaException e) {
-			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,e.getMessage());
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
 		}
 	}
 
@@ -80,6 +80,6 @@ public class UsuarioController {
 		findById(id);
 		usuario.setId(id);
 		return save(usuario);
-		
+
 	}
 }

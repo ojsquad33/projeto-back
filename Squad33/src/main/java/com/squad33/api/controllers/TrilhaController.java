@@ -15,7 +15,6 @@ import com.squad33.api.sevice.impl.TrilhaServiceImpl;
 
 @RestController
 @RequestMapping("/api/trilhas")
-@CrossOrigin(origins = "*")
 public class TrilhaController {
 
 	@Autowired
