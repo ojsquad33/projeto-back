@@ -23,7 +23,6 @@ import com.squad33.api.sevice.impl.TrilhaServiceImpl;
 
 @RestController
 @RequestMapping("/api/administrador")
-@CrossOrigin(origins = "*")
 public class AdministradorController {
 	
 	@Autowired

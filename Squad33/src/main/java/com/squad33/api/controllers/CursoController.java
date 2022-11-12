@@ -15,7 +15,6 @@ import com.squad33.api.sevice.impl.CursoServiceImpl;
 
 @RestController
 @RequestMapping("/api/cursos")
-@CrossOrigin(origins = "*")
 public class CursoController {
 	@Autowired
 	private CursoServiceImpl cursoService;

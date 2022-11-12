@@ -15,7 +15,6 @@ import com.squad33.api.sevice.impl.AulaServiceImpl;
 
 @RestController
 @RequestMapping("/api/aulas")
-@CrossOrigin(origins = "*")
 public class AulaController {
 	
 	@Autowired
