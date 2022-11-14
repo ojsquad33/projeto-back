@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.squad33.api.dto.CursoDTO;
-import com.squad33.api.mapper.UsuarioMapper;
 import com.squad33.api.models.Curso;
 import com.squad33.api.sevice.impl.CursoServiceImpl;
 

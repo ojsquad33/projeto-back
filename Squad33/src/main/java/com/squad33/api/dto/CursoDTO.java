@@ -22,6 +22,6 @@ public class CursoDTO {
 	@NotEmpty(message = "Campo nome não pode ser vazio")
 	private String descricao;
 	@NotNull(message = "Campo nome não pode ser nulo")
-	private Integer trilha;
+	private Integer trilha_id;
 	private List<Aula> aulas;
 }
