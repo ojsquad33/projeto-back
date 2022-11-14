@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.squad33.api.dto.CursoDTO;
-import com.squad33.api.mapper.CursoMapper;
+import com.squad33.api.mapper.UsuarioMapper;
 import com.squad33.api.models.Curso;
 import com.squad33.api.sevice.impl.CursoServiceImpl;
 
@@ -19,9 +19,7 @@ import com.squad33.api.sevice.impl.CursoServiceImpl;
 public class CursoController {
 	@Autowired
 	private CursoServiceImpl cursoService;
-	@Autowired
-	private CursoMapper cursoMapper;
-	
+
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
 	public List<CursoDTO> getAll(){
@@ -31,6 +29,7 @@ public class CursoController {
 	
 	private CursoDTO cursoDTO(Curso curso) {
 		CursoDTO cursoDTO = new CursoDTO();
+		cursoDTO.setId(curso.getId());
 		cursoDTO.setTrilha(curso.getTrilha().getId());
 		cursoDTO.setNome(curso.getNome());
 		cursoDTO.setDescricao(curso.getDescricao());

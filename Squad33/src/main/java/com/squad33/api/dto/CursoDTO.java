@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CursoDTO {
 	
+	private int id;
 	@NotEmpty(message = "Campo nome não pode ser vazio")
 	private String nome;
 	@NotEmpty(message = "Campo nome não pode ser vazio")
