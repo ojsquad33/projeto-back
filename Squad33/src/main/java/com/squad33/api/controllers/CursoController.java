@@ -29,7 +29,7 @@ public class CursoController {
 	private CursoDTO cursoDTO(Curso curso) {
 		CursoDTO cursoDTO = new CursoDTO();
 		cursoDTO.setId(curso.getId());
-		cursoDTO.setTrilha(curso.getTrilha().getId());
+		cursoDTO.setTrilha_id(curso.getTrilha().getId());
 		cursoDTO.setNome(curso.getNome());
 		cursoDTO.setDescricao(curso.getDescricao());
 		cursoDTO.setAulas(curso.getAulas());

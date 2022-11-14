@@ -35,6 +35,7 @@ public class Curso {
 	@JsonIgnoreProperties
 	private List<Aula> aulas;
 	@ManyToOne
+	@JsonIgnore
 	private Trilha trilha;
 	
 	public void insertAula(Aula aula) {
