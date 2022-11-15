@@ -1,4 +1,4 @@
-package com.squad33.api.sevice;
+package com.squad33.api.service;
 
 
 import com.squad33.api.models.Aula;
@@ -17,7 +17,7 @@ public interface IAulaService {
 
     public Aula findById(Integer id);
     
-    public Aula update(Integer id);
+    public Aula update(Integer id, Aula aula);
 
 
 

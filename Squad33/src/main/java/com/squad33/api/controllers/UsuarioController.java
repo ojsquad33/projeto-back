@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,10 +21,11 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.squad33.api.dto.CredenciaisDTO;
 import com.squad33.api.dto.TokenDTO;
+import com.squad33.api.dto.UsuarioDTO;
 import com.squad33.api.error.SenhaInvalidaException;
 import com.squad33.api.models.Usuario;
 import com.squad33.api.security.jwt.JwtService;
-import com.squad33.api.sevice.impl.UsuarioServiceImpl;
+import com.squad33.api.service.impl.UsuarioServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 
@@ -50,11 +50,14 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/signup")
-	public ResponseEntity<Object> save(@RequestBody @Valid Usuario usuario) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.save(usuario));
+	@ResponseStatus(HttpStatus.CREATED)
+	public UsuarioDTO save(@RequestBody @Valid Usuario usuario) {
+		usuarioService.save(usuario);
+		return usuarioDTO(usuario);
 	}
 
 	@PostMapping("/auth")
+	@ResponseStatus(HttpStatus.OK)
 	public TokenDTO autenticar(@RequestBody CredenciaisDTO credenciais, HttpServletResponse response) {
 		try {
 			boolean isAdmin = usuarioService.findByUsername(credenciais.getUsername()).isAdmin();
@@ -76,10 +79,17 @@ public class UsuarioController {
 	}
 
 	@PutMapping("/{id}")
-	public Object update(@RequestBody @Valid Usuario usuario, @PathVariable Integer id) {
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public UsuarioDTO update(@RequestBody @Valid Usuario usuario, @PathVariable Integer id) {
 		findById(id);
 		usuario.setId(id);
 		return save(usuario);
 
+	}
+	
+	public UsuarioDTO usuarioDTO(Usuario usuario) {
+		UsuarioDTO usuarioDTO = new UsuarioDTO();
+		usuarioDTO.setUsername(usuario.getUsername());
+		return usuarioDTO;
 	}
 }

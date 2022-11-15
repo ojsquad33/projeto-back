@@ -16,7 +16,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.squad33.api.security.jwt.JwtAuthFilter;
 import com.squad33.api.security.jwt.JwtService;
-import com.squad33.api.sevice.impl.UsuarioServiceImpl;
+import com.squad33.api.service.impl.UsuarioServiceImpl;
 
 @SuppressWarnings("deprecation")
 @EnableWebSecurity

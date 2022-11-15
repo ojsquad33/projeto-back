@@ -1,4 +1,4 @@
-package com.squad33.api.sevice;
+package com.squad33.api.service;
 
 import java.util.List;
 

@@ -1,15 +1,16 @@
-package com.squad33.api.sevice.impl;
+package com.squad33.api.service.impl;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
+import com.squad33.api.error.ResourceNotFoundException;
 import com.squad33.api.models.Trilha;
 import com.squad33.api.repositories.TrilhaRepository;
-import com.squad33.api.sevice.ITrilhaService;
+import com.squad33.api.service.ITrilhaService;
 
 @Service
 public class TrilhaServiceImpl implements ITrilhaService {
@@ -21,10 +22,15 @@ public class TrilhaServiceImpl implements ITrilhaService {
 	public Page<Trilha> getAll(Pageable pageable){
 		return repository.findAll(pageable);
 	}
+	
+	@Override
+	public List<Trilha> getAll(){
+		return repository.findAll();
+	}
 
 	@Override
 	public Trilha findById(Integer id) {
-		return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Trilha não encontrada, id inexistente."));
+		return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Trilha não encontrada, id inexistente."));
 	}
 
 	@Override
@@ -35,18 +41,18 @@ public class TrilhaServiceImpl implements ITrilhaService {
 	@Override
 	public void deleteById(Integer id) {
 		if(!repository.findById(id).isPresent()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Trilha não encontrada, id inexistente.");
+			throw new ResourceNotFoundException("Trilha não encontrada, id inexistente.");
 		}
 		repository.deleteById(id);
 	}
 
 	@Override
-	public Trilha update(Integer id) {
+	public Trilha update(Integer id,Trilha trilha) {
 
 		if(!repository.findById(id).isPresent()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Trilha não encontrada, id inexistente.");
+			throw new ResourceNotFoundException("Trilha não encontrada, id inexistente.");
 		}
-		Trilha trilha = repository.findById(id).orElse(null);
+		trilha.setId(id);
 		return save(trilha);
 	}
 }

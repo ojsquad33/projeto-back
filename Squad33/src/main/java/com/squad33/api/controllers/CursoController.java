@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.squad33.api.dto.CursoDTO;
 import com.squad33.api.models.Curso;
-import com.squad33.api.sevice.impl.CursoServiceImpl;
+import com.squad33.api.service.impl.CursoServiceImpl;
 
 @RestController
 @RequestMapping("/api/cursos")

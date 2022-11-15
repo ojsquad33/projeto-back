@@ -1,21 +1,21 @@
-package com.squad33.api.sevice.impl;
+package com.squad33.api.service.impl;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
+import com.squad33.api.error.ResourceAlreadyExistsException;
+import com.squad33.api.error.ResourceNotFoundException;
 import com.squad33.api.error.SenhaInvalidaException;
 import com.squad33.api.models.Usuario;
 import com.squad33.api.repositories.UsuarioRepository;
-import com.squad33.api.sevice.IUsuarioService;
+import com.squad33.api.service.IUsuarioService;
 
 @Service
 public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService {
@@ -58,7 +58,7 @@ public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService {
 	@Override
 	public Usuario save(Usuario usuario) {
 		if (repository.existsByUsername(usuario.getUsername())) {
-			throw new ResponseStatusException(HttpStatus.CONFLICT, "Username já existente");
+			throw new ResourceAlreadyExistsException("Username já existente");
 		}
 		usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
 		return repository.save(usuario);
@@ -72,7 +72,7 @@ public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService {
 
 	@Override
 	public Usuario findById(Integer id) {
-		return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Usuario não encontrado"));
 	}
 
 	@Override
