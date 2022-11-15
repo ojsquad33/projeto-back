@@ -3,7 +3,9 @@
 <div style="display:flex">
   <img src="https://img.shields.io/apm/l/M"/>
   <img src="https://img.shields.io/github/languages/code-size/ojsquad33/projeto-back" />
-  <img src="https://img.shields.io/nodeping/status/jkiwn052-ntpp-4lbb-8d45-ihew6d9ucoei?up_color=orange&up_message=andamento" />
+  <img src="https://img.shields.io/nodeping/status/jkiwn052-ntpp-4lbb-8d45-ihew6d9ucoei?up_color=green&up_message=concluído" />
+  <img src="https://img.shields.io/badge/version-1.0-green.svg"/>
+  
 </div>
 
 <br/>
