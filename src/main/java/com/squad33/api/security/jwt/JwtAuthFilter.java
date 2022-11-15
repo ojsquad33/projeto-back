@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.squad33.api.sevice.impl.UsuarioServiceImpl;
+import com.squad33.api.service.impl.UsuarioServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 
