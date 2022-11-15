@@ -34,8 +34,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 
-		//String authorization = request.getHeader("Authorization");
-
 		Cookie[] cookies = request.getCookies();
 		String token = "";
 
@@ -44,7 +42,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 				String name = cookies[i].getName();
 				String value = cookies[i].getValue();
 				if(name.equals("Authorization")) {
-					response.addCookie(new Cookie(name, value));;
+					response.addCookie(new Cookie(name, value));
 					token = value;
 				}
 			}

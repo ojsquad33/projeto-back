@@ -2,11 +2,11 @@ package com.squad33.api.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,10 +21,11 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.squad33.api.dto.CredenciaisDTO;
 import com.squad33.api.dto.TokenDTO;
+import com.squad33.api.dto.UsuarioDTO;
 import com.squad33.api.error.SenhaInvalidaException;
 import com.squad33.api.models.Usuario;
 import com.squad33.api.security.jwt.JwtService;
-import com.squad33.api.sevice.impl.UsuarioServiceImpl;
+import com.squad33.api.service.impl.UsuarioServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,7 +33,6 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/usuarios")
 @RequiredArgsConstructor
 public class UsuarioController {
-
 
 	private final UsuarioServiceImpl usuarioService;
 	private final JwtService jwtService;
@@ -50,33 +50,46 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/signup")
-	public ResponseEntity<Object> save(@RequestBody @Valid Usuario usuario) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.save(usuario));
+	@ResponseStatus(HttpStatus.CREATED)
+	public UsuarioDTO save(@RequestBody @Valid Usuario usuario) {
+		usuarioService.save(usuario);
+		return usuarioDTO(usuario);
 	}
-	
+
 	@PostMapping("/auth")
-	public TokenDTO autenticar(@RequestBody CredenciaisDTO credenciais) {
+	@ResponseStatus(HttpStatus.OK)
+	public TokenDTO autenticar(@RequestBody CredenciaisDTO credenciais, HttpServletResponse response) {
 		try {
 			boolean isAdmin = usuarioService.findByUsername(credenciais.getUsername()).isAdmin();
-			Usuario usuario = Usuario.builder()
-					.username(credenciais.getUsername())
-					.senha(credenciais.getSenha())
-					.admin(isAdmin)
-					.build();
+			Usuario usuario = Usuario.builder().username(credenciais.getUsername()).senha(credenciais.getSenha())
+					.admin(isAdmin).build();
 			UserDetails usuarioAutenticado = usuarioService.autenticar(usuario);
 			String token = jwtService.gerarToken(usuario);
-			
-			return new TokenDTO(usuario.getUsername(), token);
+
+			Cookie cookie = new Cookie("Authorization", token);
+			cookie.setPath("/");
+			String[] roles = usuario.isAdmin() ? new String[] { "ADM", "USER" } : new String[] { "USER" };
+
+			response.addCookie(cookie);
+
+			return new TokenDTO(usuario.getUsername(), token, roles);
 		} catch (UsernameNotFoundException | SenhaInvalidaException e) {
-			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,e.getMessage());
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
 		}
 	}
 
 	@PutMapping("/{id}")
-	public Object update(@RequestBody @Valid Usuario usuario, @PathVariable Integer id) {
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public UsuarioDTO update(@RequestBody @Valid Usuario usuario, @PathVariable Integer id) {
 		findById(id);
 		usuario.setId(id);
 		return save(usuario);
-		
+
+	}
+	
+	public UsuarioDTO usuarioDTO(Usuario usuario) {
+		UsuarioDTO usuarioDTO = new UsuarioDTO();
+		usuarioDTO.setUsername(usuario.getUsername());
+		return usuarioDTO;
 	}
 }

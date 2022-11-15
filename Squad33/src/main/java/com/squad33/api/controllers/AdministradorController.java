@@ -4,7 +4,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,13 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.squad33.api.models.Aula;
 import com.squad33.api.models.Curso;
 import com.squad33.api.models.Trilha;
-import com.squad33.api.sevice.impl.AulaServiceImpl;
-import com.squad33.api.sevice.impl.CursoServiceImpl;
-import com.squad33.api.sevice.impl.TrilhaServiceImpl;
+import com.squad33.api.service.impl.AulaServiceImpl;
+import com.squad33.api.service.impl.CursoServiceImpl;
+import com.squad33.api.service.impl.TrilhaServiceImpl;
 
 @RestController
 @RequestMapping("/api/administrador")
-@CrossOrigin(origins = "*")
 public class AdministradorController {
 	
 	@Autowired
@@ -48,8 +46,8 @@ public class AdministradorController {
 	
 	@PutMapping("cursos/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public Curso updateCursoById(@PathVariable Integer id) {
-		return cursoService.update(id);
+	public Curso updateCursoById(@PathVariable Integer id, @RequestBody Curso curso) {
+		return cursoService.update(id, curso);
 	}
 	
 	
@@ -61,8 +59,8 @@ public class AdministradorController {
 	
 	@PutMapping("trilhas/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public Trilha updateTrilhaById(@PathVariable Integer id) {
-		return trilhaService.update(id);
+	public Trilha updateTrilhaById(@PathVariable Integer id, @RequestBody Trilha trilha) {
+		return trilhaService.update(id,trilha);
 	}
 	
 	@PostMapping("trilhas")
@@ -89,8 +87,8 @@ public class AdministradorController {
 	
 	@PutMapping("aulas/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public Aula updateAulaById(@PathVariable Integer id) {
-		return aulaService.update(id);
+	public Aula updateAulaById(@PathVariable Integer id, @RequestBody Aula aula) {
+		return aulaService.update(id,aula);
 	}
 	
 }
