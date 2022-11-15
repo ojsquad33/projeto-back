@@ -54,6 +54,12 @@ Não é necessário:
 
 <br/>
 
+### Autorizações
+
+<img src="https://cdn.discordapp.com/attachments/1028712344110514176/1041880351871598593/auths.PNG"/>
+
+<br/>
+
 ### Desenvolvedores
 
 | Desenvolvedor  | Contato   |
