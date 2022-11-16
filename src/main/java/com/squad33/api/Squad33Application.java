@@ -18,10 +18,9 @@ public class Squad33Application {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("http://localhost:3000")
-				.allowedOrigins("https://squad33-hackathon.vercel.app")
+				registry.addMapping("/**").allowedOrigins("http://localhost:3000","https://squad33-hackathon.vercel.app")
 						.allowCredentials(true);
-						
+
 			}
 		};
 	}
