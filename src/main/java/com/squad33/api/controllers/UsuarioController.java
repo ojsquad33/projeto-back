@@ -3,6 +3,7 @@ package com.squad33.api.controllers;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -58,16 +59,21 @@ public class UsuarioController {
 
 	@PostMapping("/auth")
 	@ResponseStatus(HttpStatus.OK)
-	public TokenDTO autenticar(@RequestBody CredenciaisDTO credenciais, HttpServletResponse response) {
+	public TokenDTO autenticar(@RequestBody CredenciaisDTO credenciais, HttpServletResponse response, HttpServletRequest request) {
 		try {
 			boolean isAdmin = usuarioService.findByUsername(credenciais.getUsername()).isAdmin();
 			Usuario usuario = Usuario.builder().username(credenciais.getUsername()).senha(credenciais.getSenha())
 					.admin(isAdmin).build();
 			UserDetails usuarioAutenticado = usuarioService.autenticar(usuario);
 			String token = jwtService.gerarToken(usuario);
-
+			
+			
+			String domain = request.getHeader("domain");
+			
 			Cookie cookie = new Cookie("Authorization", token);
 			cookie.setPath("/");
+			cookie.setDomain(domain);
+			
 			String[] roles = usuario.isAdmin() ? new String[] { "ADM", "USER" } : new String[] { "USER" };
 
 			response.addCookie(cookie);
