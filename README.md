@@ -5,6 +5,7 @@
   <img src="https://img.shields.io/github/languages/code-size/ojsquad33/projeto-back" />
   <img src="https://img.shields.io/badge/status-concluido-green" />
   <img src="https://img.shields.io/badge/version-1.0-green.svg"/>
+  <img src="https://img.shields.io/badge/build-up-green" />
   
 </div>
 
@@ -46,10 +47,9 @@ Não é necessário:
 
 ### Adicionar no futuro
 - Filtro para buscar cursos e aulas dinamicamente
-- Adicionar padrão DTO para por mais 1 nível de segurança
 - Aplicar melhores práticas de programação
 - Aplicar testes e deixar uma coverage alta
-- Fazer deploy da aplicação
+- Ajustar deploy da aplicação
 - Aumentar complexidade do projeto
 
 <br/>
