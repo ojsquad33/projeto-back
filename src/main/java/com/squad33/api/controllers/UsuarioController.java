@@ -68,11 +68,11 @@ public class UsuarioController {
 			String token = jwtService.gerarToken(usuario);
 			
 			
-			String domain = request.getHeader("domain");
+			
 			
 			Cookie cookie = new Cookie("Authorization", token);
 			cookie.setPath("/");
-			cookie.setDomain(domain);
+			
 			
 			String[] roles = usuario.isAdmin() ? new String[] { "ADM", "USER" } : new String[] { "USER" };
 
